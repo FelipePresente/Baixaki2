@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>Baixaki 2</title>
+</head>
+
+<body class="bg-gray-50 text-gray-900 font-sans antialiased selection:bg-stone-200 selection:text-stone-900">
+
+    <header class="fixed top-0 left-0 w-full bg-white/80 backdrop-blur-md border-b border-gray-100 z-50" id="header">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+
+            <a href="/" class="text-2xl font-bold tracking-tight text-gray-900 hover:opacity-80 transition-opacity">
+                Baixaki<span class="text-stone-500">2</span>
+            </a>
+
+            <nav class="hidden md:block">
+                <ul class="flex items-center gap-8 text-sm font-medium text-gray-600">
+                    <li><a href="/" class="hover:text-stone-500 transition-colors">Home</a></li>
+                    <li><a href="/" class="hover:text-stone-500 transition-colors">Games</a></li>
+                    <li><a href="/" class="hover:text-stone-500 transition-colors">Community</a></li>
+                    <li><a href="/" class="hover:text-stone-500 transition-colors">Support</a></li>
+                </ul>
+            </nav>
+
+        </div>
+    </header>
+
+    <main class="pt-28 pb-20 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto min-h-screen">
+
+        <div id="gamesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        </div>
+
+    </main>
+
+    <script src="js/indexPage.js"></script>
+
+</body>
+
+</html>

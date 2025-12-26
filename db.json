@@ -1,0 +1,63 @@
+{
+  "games": [
+    {
+      "id": "01",
+      "name": "Fortnite",
+      "genre": "Battle Royale",
+      "size": "50GB",
+      "cover": "images/fortnite-cover.jpg"
+    },
+    {
+      "id": "02",
+      "name": "Minecraft",
+      "genre": "adventure",
+      "size": "2GB",
+      "cover": "images/minecraft-cover.png"
+    },
+    {
+      "id": "03",
+      "name": "Skul: the hero slayer",
+      "genre": "Rogue-like",
+      "size": "2GB",
+      "cover": "images/skul-cover.png"
+    },
+    {
+      "id": "04",
+      "name": "Roblox",
+      "genre": "Adventure",
+      "size": "300MB",
+      "cover": "images/roblox-cover.png"
+    },
+    {
+      "id": "05",
+      "name": "GTA V",
+      "genre": "Crime",
+      "size": "100GB",
+      "cover": "images/gtav-cover.png"
+    },
+    {
+      "id": "06",
+      "name": "Valorant",
+      "genre": "FPS",
+      "size": "45GB",
+      "cover": "images/valorant-cover.png"
+    }
+  ],
+  "users": [
+    {
+      "id": "350f",
+      "username": "poorace",
+      "password": "123"
+    },
+    {
+      "id": "e5c0",
+      "username": "thigas",
+      "password": "69"
+    },
+    {
+      "id": "41aa",
+      "username": "soujm",
+      "password": "67"
+    }
+  ]
+}

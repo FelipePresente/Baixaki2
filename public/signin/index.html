@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>Create an account</title>
+</head>
+<body>
+    
+    <main class ="h-screen w-full flex justify-center items-center bg-stone-300">
+
+        <section class ="min-w-100 min-h-140 bg-white rounded p-5">
+            <h1 class ="font-bold text-4xl">Create an account</h1>
+
+            <form action="/signin" method="post" class =" mt-50">
+                
+                <div class ="flex justify-center items-center gap-5">
+                <input type="text" name="username" id="userInput" class ="w-full rounded border" placeholder="Type your username">
+
+                <input type="password" name="password" id="passwordInput" class ="w-full rounded border" placeholder="Type your password">
+                </div>
+
+                <input type="submit" value="Done" class ="mt-5 py-1 px-10 rounded border justify-self-center">
+            </form>
+        </section>
+
+    </main>
+
+    <script src ="signin.js"></script>
+
+</body>
+</html>
