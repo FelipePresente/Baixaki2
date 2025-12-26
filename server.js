@@ -51,10 +51,10 @@ app.post('/login', async (req, res) => {
     try {
       const response = await fetch('http://localhost:2000/users')
       const users = await response.json()
-      const userFound = users.find(user => user.username === username && user.password === password)
+      const foundUser = users.find(user => user.username === username && user.password === password)
 
-      if (userFound) {
-        res.cookie('userLogged', `${userFound}`)
+      if (foundUser) {
+        res.cookie('userCookie', JSON.stringify(foundUser))
         res.status(200).redirect('/')
       } else {
         res.status(404).send('User not found')

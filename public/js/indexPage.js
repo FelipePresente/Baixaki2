@@ -36,4 +36,31 @@ fetch('http://localhost:2000/games')
         })
     });
 
-// User render system
+// This is calling the cookie from server.js
+function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+}
+
+const loggedUserCookie = getCookie('userCookie')
+
+if (loggedUserCookie) {
+    try {
+        let decodeCookie = decodeURIComponent(loggedUserCookie);
+        const user = JSON.parse(decodeCookie);
+
+    header.innerHTML += `<div class ="flex justify-center items-center gap-3">
+        <div class ="font-bold">Welcome, ${user.username}!</div>
+        <div class ="px-4 py-2 text-sm font-bold text-white bg-stone-500 rounded-lg hover:bg-stone-600 transition-colors shadow-sm" id ="logout">Logout</div>
+    </div>`
+
+    } catch (error) {
+        console.error("Error parsing user cookie:", error);
+    }
+} else {
+    header.innerHTML += `<div class="flex items-center gap-4">
+                <a href="/signin" class="text-sm font-medium text-gray-600 hover:text-stone-500 transition-colors">Sign in</a>
+                <a href="/login" class="px-4 py-2 text-sm font-bold text-white bg-stone-500 rounded-lg hover:bg-stone-600 transition-colors shadow-sm">Login</a>
+            </div>`
+}
