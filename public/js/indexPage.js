@@ -44,19 +44,39 @@ function getCookie(name) {
 }
 
 const loggedUserCookie = getCookie('userCookie')
+const savedUser = localStorage.getItem('savedUser')
+
+let user = null
 
 if (loggedUserCookie) {
     try {
-        let decodeCookie = decodeURIComponent(loggedUserCookie);
-        const user = JSON.parse(decodeCookie);
+        const decodeCookie = decodeURIComponent(loggedUserCookie)
+        localStorage.setItem('savedUser', decodeCookie)
+        user = JSON.parse(decodeCookie)
+    } catch (error) {
+        console.error("Error parsing loop cookie:", error)
+    }
+} else if (savedUser) {
+    try {
+        user = JSON.parse(savedUser)
+    } catch (error) {
+        console.error("Error parsing local storage user:", error)
+    }
+}
 
+if (user) {
     header.innerHTML += `<div class ="flex justify-center items-center gap-3">
         <div class ="font-bold">Welcome, ${user.username}!</div>
-        <div class ="px-4 py-2 text-sm font-bold text-white bg-stone-500 rounded-lg hover:bg-stone-600 transition-colors shadow-sm" id ="logout">Logout</div>
+        <div class ="px-4 py-2 text-sm font-bold text-white bg-stone-500 rounded-lg hover:bg-stone-600 transition-colors shadow-sm cursor-pointer" id ="logout">Logout</div>
     </div>`
 
-    } catch (error) {
-        console.error("Error parsing user cookie:", error);
+    const logoutBtn = document.getElementById("logout")
+    if (logoutBtn) {
+        logoutBtn.addEventListener("click", () => {
+            document.cookie = "userCookie=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
+            localStorage.removeItem("savedUser")
+            window.location.reload()
+        })
     }
 } else {
     header.innerHTML += `<div class="flex items-center gap-4">
