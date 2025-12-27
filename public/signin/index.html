@@ -1,33 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <title>Create an account</title>
+    <title>Sign Up - Baixaki 2</title>
 </head>
-<body>
-    
-    <main class ="h-screen w-full flex justify-center items-center bg-stone-300">
 
-        <section class ="min-w-100 min-h-140 bg-white rounded p-5">
-            <h1 class ="font-bold text-4xl">Create an account</h1>
+<body class="bg-gray-50 text-gray-900 font-sans antialiased selection:bg-stone-200 selection:text-stone-900">
 
-            <form action="/signin" method="post" class =" mt-50">
-                
-                <div class ="flex justify-center items-center gap-5">
-                <input type="text" name="username" id="userInput" class ="w-full rounded border" placeholder="Type your username">
+    <main class="min-h-screen w-full flex flex-col justify-center items-center p-4">
 
-                <input type="password" name="password" id="passwordInput" class ="w-full rounded border" placeholder="Type your password">
+        <div class="mb-8 text-center">
+            <a href="/" class="text-3xl font-bold tracking-tight text-gray-900 hover:opacity-80 transition-opacity">
+                Baixaki<span class="text-stone-500">2</span>
+            </a>
+        </div>
+
+        <section
+            class="w-full max-w-md bg-white rounded-2xl shadow-xl shadow-gray-200/50 border border-gray-100 p-8 sm:p-10">
+            <div class="mb-8 text-center">
+                <h1 class="font-bold text-2xl text-gray-900">Create an account</h1>
+                <p class="text-sm text-gray-500 mt-2">Join us to get started.</p>
+            </div>
+
+            <form action="/signin" method="post" class="space-y-5">
+
+                <div class="space-y-2">
+                    <label for="username" class="text-sm font-medium text-gray-700 block">Username</label>
+                    <input type="text" name="username" id="username"
+                        class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-2 focus:ring-stone-500/20 focus:border-stone-500 block p-3 outline-none transition-all placeholder-gray-400"
+                        placeholder="Choose a username">
                 </div>
 
-                <input type="submit" value="Done" class ="mt-5 py-1 px-10 rounded border justify-self-center">
+                <div class="space-y-2">
+                    <label for="password" class="text-sm font-medium text-gray-700 block">Password</label>
+                    <input type="password" name="password" id="password"
+                        class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-2 focus:ring-stone-500/20 focus:border-stone-500 block p-3 outline-none transition-all placeholder-gray-400"
+                        placeholder="••••••••">
+                </div>
+
+                <button type="submit"
+                    class="w-full text-white bg-gray-900 hover:bg-stone-600 focus:ring-4 focus:outline-none focus:ring-stone-300 font-medium rounded-lg text-sm px-5 py-3 text-center transition-colors cursor-pointer mt-2">
+                    Create account
+                </button>
             </form>
+
+            <div class="mt-6 text-center text-sm text-gray-500">
+                Already have an account?
+                <a href="/login/" class="font-semibold text-stone-600 hover:text-stone-500 transition-colors">Login</a>
+            </div>
         </section>
 
     </main>
 
-    <script src ="signin.js"></script>
+    <script src="signin.js"></script>
 
 </body>
+
 </html>
