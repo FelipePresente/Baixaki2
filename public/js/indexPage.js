@@ -1,12 +1,13 @@
 const gamesGrid = document.querySelector("#gamesGrid")
 const header = document.querySelector("#header")
 
-// This system renders the games in ('/') based on its characteristics in db.json
-fetch('http://localhost:2000/games')
-    .then(res => res.json())
-    .then(games => {
-        games.forEach(game => {
-            gamesGrid.innerHTML += `
+// This function renders the games at 'localhost://2000/games' in 'localhost://8000/'
+function renderGames() {
+    fetch('http://localhost:2000/games')
+        .then(res => res.json())
+        .then(games => {
+            games.forEach(game => {
+                gamesGrid.innerHTML += `
             <div class="flex items-start cursor-pointer gap-4 p-4 rounded-lg border border-gray-100 bg-white hover:border-stone-300 transition-colors group">
                 <div class="w-16 h-16 shrink-0 bg-gray-50 rounded-lg flex items-center justify-center text-2xl border border-gray-100 group-hover:bg-stone-100 group-hover:text-stone-500 transition-colors bg-center bg-cover">
                     <img src ="${game.cover}">
@@ -29,58 +30,71 @@ fetch('http://localhost:2000/games')
                     </div>
                 </div>
                 
-                <button class="self-center ml-2 p-2 text-gray-400 hover:text-stone-500 hover:bg-stone-100 rounded-lg transition-colors" title="Download">
+                <button class="self-center ml-2 p-2 text-gray-400 hover:text-stone-500 hover:bg-stone-100 rounded-lg transition-colors cursor-pointer" title="Download">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
                 </button>
             </div>`
-        })
-    });
+            })
+        });
+} renderGames()
 
-// This is calling the cookie from server.js
+// This function is a cookie caller
 function getCookie(name) {
     const value = `; ${document.cookie}`;
     const parts = value.split(`; ${name}=`);
     if (parts.length === 2) return parts.pop().split(';').shift();
 }
 
-const loggedUserCookie = getCookie('userCookie')
-const savedUser = localStorage.getItem('savedUser')
+// Just the user chilling before login
+let user
 
-let user = null
+// This function verifies and saves the user cookie
+function verifyCookie() {
+    // It gives a name to the caught cookie 
+    const loggedUserCookie = getCookie('userCookie')
+    // It calls 'savedUser'
+    const savedUser = localStorage.getItem('savedUser')
 
-if (loggedUserCookie) {
-    try {
-        const decodeCookie = decodeURIComponent(loggedUserCookie)
-        localStorage.setItem('savedUser', decodeCookie)
-        user = JSON.parse(decodeCookie)
-    } catch (error) {
-        console.error("Error parsing loop cookie:", error)
+    if (loggedUserCookie) {
+        try {
+            const decodeCookie = decodeURIComponent(loggedUserCookie)
+            // It saves the decoded cookie at 'savedUser'
+            localStorage.setItem('savedUser', decodeCookie)
+            user = JSON.parse(decodeCookie)
+        } catch (error) {
+            console.error("Error parsing loop cookie:", error)
+        }
+    } else if (savedUser) { // It verifies if everything is ok
+        try {
+            user = JSON.parse(savedUser)
+        } catch (error) {
+            console.error("Error parsing local storage user:", error)
+        }
     }
-} else if (savedUser) {
-    try {
-        user = JSON.parse(savedUser)
-    } catch (error) {
-        console.error("Error parsing local storage user:", error)
-    }
-}
+} verifyCookie()
 
-if (user) {
-    header.innerHTML += `<div class ="flex justify-center items-center gap-3">
+// This function renders the user at 'localhost://8000/'
+function renderUser() {
+    if (user) {
+        header.innerHTML += `<div class ="flex justify-center items-center gap-3">
         <div class ="font-bold">Welcome, ${user.username}!</div>
         <div class ="px-4 py-2 text-sm font-bold text-white bg-stone-500 rounded-lg hover:bg-stone-600 transition-colors shadow-sm cursor-pointer" id ="logout">Logout</div>
     </div>`
 
-    const logoutBtn = document.getElementById("logout")
-    if (logoutBtn) {
-        logoutBtn.addEventListener("click", () => {
-            document.cookie = "userCookie=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
-            localStorage.removeItem("savedUser")
-            window.location.reload()
-        })
-    }
-} else {
-    header.innerHTML += `<div class="flex items-center gap-4">
+        // Kills the cookie right after successfull login 
+        document.cookie = "userCookie=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
+
+        const logoutBtn = document.getElementById("logout")
+        if (logoutBtn) {
+            logoutBtn.addEventListener("click", () => {
+                localStorage.removeItem("savedUser")
+                window.location.reload()
+            })
+        }
+    } else {
+        header.innerHTML += `<div class="flex items-center gap-4">
                 <a href="/signin" class="text-sm font-medium text-gray-600 hover:text-stone-500 transition-colors">Sign in</a>
                 <a href="/login" class="px-4 py-2 text-sm font-bold text-white bg-stone-500 rounded-lg hover:bg-stone-600 transition-colors shadow-sm">Login</a>
             </div>`
-}
+    }
+} renderUser()
