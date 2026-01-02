@@ -43,7 +43,7 @@
       "cover": "images/valorant-cover.png"
     }
   ],
-  "users": [ 
+  "users": [
     {
       "id": "350f",
       "username": "poorace",
@@ -58,6 +58,11 @@
       "id": "41aa",
       "username": "soujm",
       "password": "67"
+    },
+    {
+      "id": "9253",
+      "username": "junindorock",
+      "password": "12345678"
     }
   ]
 }

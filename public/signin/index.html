@@ -29,15 +29,22 @@
 
                 <div class="space-y-2">
                     <label for="username" class="text-sm font-medium text-gray-700 block">Username</label>
-                    <input type="text" name="username" id="username"
+                    <input type="text" minlength="4" maxlength="12" required name="username" id="username"
                         class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-2 focus:ring-stone-500/20 focus:border-stone-500 block p-3 outline-none transition-all placeholder-gray-400"
                         placeholder="Choose a username">
                 </div>
 
                 <div class="space-y-2">
                     <label for="password" class="text-sm font-medium text-gray-700 block">Password</label>
-                    <input type="password" name="password" id="password"
+                    <input type="password" minlength="8" maxlength="24" required name="password" id="password"
                         class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-2 focus:ring-stone-500/20 focus:border-stone-500 block p-3 outline-none transition-all placeholder-gray-400"
+                        placeholder="••••••••">
+                </div>
+
+                <div class ="space-y-2">
+                    <label for="confirmPassword" class ="text-sm font-medium text-gray-700 block">Password Confirmation</label>
+                    <input type="password" required name="confirmPassword" id="confirmPassword"
+                        class="bg-gray-50 border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-2 focus:ring-stone-500/20 focus:border-stone-500 block w-full p-3 outline-none transition-all placeholder-gray-400"
                         placeholder="••••••••">
                 </div>
 
@@ -54,8 +61,6 @@
         </section>
 
     </main>
-
-    <script src="signin.js"></script>
 
 </body>
 
