@@ -76,13 +76,13 @@ function verifyCookie() {
 // This function renders the user at 'localhost://8000/'
 function renderUser() {
     if (user) {
+        // Kills the cookie right after successfull login 
+        document.cookie = "userCookie=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
+
         header.innerHTML += `<div class ="flex justify-center items-center gap-3">
         <div class ="font-bold">Welcome, ${user.username}!</div>
         <div class ="px-4 py-2 text-sm font-bold text-white bg-stone-500 rounded-lg hover:bg-stone-600 transition-colors shadow-sm cursor-pointer" id ="logout">Logout</div>
     </div>`
-
-        // Kills the cookie right after successfull login 
-        document.cookie = "userCookie=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
 
         const logoutBtn = document.getElementById("logout")
         if (logoutBtn) {
