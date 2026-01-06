@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>Admin Page</title>
+</head>
+
+<body class="bg-gray-50">
+
+    <header class="bg-white h-16 border-b border-gray-200 flex items-center justify-between px-6 shadow-sm relative"
+        id="header">
+    </header>
+
+    <main class="min-h-[calc(100vh-4rem)] flex justify-center items-start py-12">
+
+        <!-- Games info -->
+        <section class="w-full max-w-5xl px-4 relative" id="gamesSec">
+            <div class="flex justify-end mb-6">
+                <button
+                    class="bg-black text-white cursor-pointer px-5 py-2.5 rounded-lg text-sm font-medium hover:bg-gray-800 transition-colors shadow-sm flex items-center gap-2"
+                    id="addGame">
+                    <span>Add Game</span>
+                </button>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden overflow-x-auto">
+                <table class="w-full text-left border-collapse" id="gamesTable">
+                    <thead class="bg-gray-50/50 border-b border-gray-100">
+                        <tr>
+                            <th class="py-4 px-6 text-xs font-semibold text-gray-500 uppercase tracking-wider">Cover
+                            </th>
+                            <th class="py-4 px-6 text-xs font-semibold text-gray-500 uppercase tracking-wider">Name</th>
+                            <th class="py-4 px-6 text-xs font-semibold text-gray-500 uppercase tracking-wider">Genre
+                            </th>
+                            <th class="py-4 px-6 text-xs font-semibold text-gray-500 uppercase tracking-wider">Size</th>
+                            <th
+                                class="py-4 px-6 text-xs font-semibold text-gray-500 uppercase tracking-wider text-right">
+                                Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100 text-sm text-gray-600">
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="../js/adminPage.js"></script>
+
+</body>
+
+</html>
