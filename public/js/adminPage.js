@@ -5,7 +5,7 @@ const gamesSec = document.querySelector("#gamesSec")
 
 // It renders a list of games
 function renderGames() {
-    fetch("http://localhost:2000/games")
+    fetch("/games")
         .then(res => res.json())
         .then(games => {
             const tbody = gamesTable.querySelector('tbody')
@@ -28,16 +28,10 @@ function renderGames() {
         })
 } renderGames()
 
-function getCookie(name) {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop().split(';').shift();
-}
-
-const userCookie = getCookie('userCookie');
-if (userCookie) {
+const userInfo = getCookie('userInfo');
+if (userInfo) {
     try {
-        const user = JSON.parse(decodeURIComponent(userCookie));
+        const user = JSON.parse(decodeURIComponent(userInfo));
         header.innerHTML = `
             <a href="/" class="text-xl font-bold tracking-tight text-gray-900 hover:opacity-80 transition-opacity z-10">
                 Baixaki<span class="text-stone-500">2</span>
@@ -77,7 +71,7 @@ addGame.onclick = function () {
                 <button type="button" id="cancelAdd" class="text-gray-500 hover:text-gray-700 font-medium text-sm transition-colors cursor-pointer">Cancel</button>
             </div>
             
-            <form action="/addGame" method="post" class="space-y-6">
+            <form action="/games/add" method="post" class="space-y-6">
                 <div>
                     <label for="name" class="block text-sm font-medium text-gray-700 mb-2">Game Name</label>
                     <input type="text" name="name" id="name" required
@@ -129,7 +123,7 @@ addGame.onclick = function () {
 // It renders the container to edit a the game
 function editGame(gameId, gameName, gameGenre, gameSize, gameCover) {
 
-    fetch('http://localhost:2000/games')
+    fetch('/games')
         .then(res => res.json())
         .then(games => {
 
@@ -149,7 +143,7 @@ function editGame(gameId, gameName, gameGenre, gameSize, gameCover) {
             <button type="button" id="cancelEdit" class="text-gray-500 hover:text-gray-700 font-medium text-sm transition-colors cursor-pointer">Cancel</button>
             </div>
             
-            <form action="/editGame" method="post" class="space-y-6">
+            <form action="/games/edit" method="post" class="space-y-6">
             <div>
             <label for="edit-name" class="block text-sm font-medium text-gray-700 mb-2">Game Name</label>
             <input type="text" name="name" id="edit-name" required
@@ -181,21 +175,10 @@ function editGame(gameId, gameName, gameGenre, gameSize, gameCover) {
             </button>
             </div>
 
-            <input type='text' name="whisper" class="hidden" id ="whisper">
+            <input type='text' name="id" class="hidden" id="id">
             </form>
             `
                 gamesSec.appendChild(formContainer)
-                const whisper = document.querySelector("#whisper")
-                const editName = document.querySelector("#edit-name")
-                const editGenre = document.querySelector("#edit-genre")
-                const editSize = document.querySelector("#edit-size")
-                const editCover = document.querySelector("#edit-cover")
-
-                whisper.value = gameId
-                editName.value = gameName
-                editGenre.value = gameGenre
-                editSize.value = gameSize
-                editCover.value = gameCover
 
                 formContainer.querySelector("#cancelEdit").onclick = function () {
                     formContainer.style.display = 'none'
@@ -205,6 +188,18 @@ function editGame(gameId, gameName, gameGenre, gameSize, gameCover) {
             } else {
                 formContainer.style.display = 'block'
             }
+            
+            const id = document.querySelector("#id")
+                const editName = document.querySelector("#edit-name")
+                const editGenre = document.querySelector("#edit-genre")
+                const editSize = document.querySelector("#edit-size")
+                const editCover = document.querySelector("#edit-cover")
+
+                id.value = gameId
+                editName.value = gameName
+                editGenre.value = gameGenre
+                editSize.value = gameSize
+                editCover.value = gameCover
         })
 }
 
@@ -222,8 +217,8 @@ function deleteGame(gameId) {
                     <h3 class="text-lg font-bold text-gray-900 mb-2">Delete Game</h3>
                     <p class="text-sm text-gray-500 mb-6">Are you sure you want to remove this game? This action is <span class="font-medium text-red-600">irreversible</span>.</p>
                     
-                    <form action="/deleteGame" method="post" class="flex justify-center gap-3">
-                        <input type="hidden" name="whisper2" id="deleteWhisper">
+                    <form action="/games/delete" method="post" class="flex justify-center gap-3">
+                        <input type="hidden" name="id" id="idDelete">
                         <button type="button" id="cancelDelete" class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors cursor-pointer">
                             Cancel
                         </button>
@@ -246,5 +241,7 @@ function deleteGame(gameId) {
     }
 
     modal.style.display = 'flex'
-    document.querySelector("#deleteWhisper").value = gameId
+    const idDelete = document.querySelector("#idDelete")
+
+    idDelete.value = gameId
 }

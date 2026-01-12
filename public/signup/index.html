@@ -25,7 +25,7 @@
                 <p class="text-sm text-gray-500 mt-2">Join us to get started.</p>
             </div>
 
-            <form action="/signin" method="post" class="space-y-5">
+            <form action="/users/signup" method="post" class="space-y-5">
 
                 <div class="space-y-2">
                     <label for="username" class="text-sm font-medium text-gray-700 block">Username</label>
@@ -41,8 +41,9 @@
                         placeholder="••••••••">
                 </div>
 
-                <div class ="space-y-2">
-                    <label for="confirmPassword" class ="text-sm font-medium text-gray-700 block">Password Confirmation</label>
+                <div class="space-y-2">
+                    <label for="confirmPassword" class="text-sm font-medium text-gray-700 block">Password
+                        Confirmation</label>
                     <input type="password" required name="confirmPassword" id="confirmPassword"
                         class="bg-gray-50 border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-2 focus:ring-stone-500/20 focus:border-stone-500 block w-full p-3 outline-none transition-all placeholder-gray-400"
                         placeholder="••••••••">

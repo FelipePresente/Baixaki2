@@ -3,30 +3,30 @@
     {
       "name": "Fortnite",
       "genre": "Battle Royale",
-      "size": "50GB",
+      "size": "120GB",
       "cover": "https://upload.wikimedia.org/wikipedia/en/thumb/a/ae/Fortnite_Save_The_World.jpg/250px-Fortnite_Save_The_World.jpg",
       "id": "e4f1"
     },
     {
-      "id": "b7a2",
       "name": "Minecraft",
       "genre": "Adventure",
       "size": "2GB",
-      "cover": "https://upload.wikimedia.org/wikipedia/en/b/b6/Minecraft_2024_cover_art.png"
+      "cover": "https://upload.wikimedia.org/wikipedia/en/b/b6/Minecraft_2024_cover_art.png",
+      "id": "b7a2"
     },
     {
-      "id": "c9d3",
       "name": "Skul: the hero slayer",
       "genre": "Rogue-like",
       "size": "2GB",
-      "cover": "https://play-lh.googleusercontent.com/8nuRkO_lfGb-QzIVH6XPbN6r9FMBphYJ-Z_jzHrtxZW_4txdwPjvl4frRo4QCr0BmuA"
+      "cover": "https://play-lh.googleusercontent.com/8nuRkO_lfGb-QzIVH6XPbN6r9FMBphYJ-Z_jzHrtxZW_4txdwPjvl4frRo4QCr0BmuA",
+      "id": "c9d3"
     },
     {
-      "id": "f5e6",
       "name": "Roblox",
       "genre": "Adventure",
       "size": "300MB",
-      "cover": "https://upload.wikimedia.org/wikipedia/commons/4/48/Roblox_Logo_2021.png"
+      "cover": "https://upload.wikimedia.org/wikipedia/commons/4/48/Roblox_Logo_2021.png",
+      "id": "f5e6"
     },
     {
       "name": "GTA V",
@@ -36,11 +36,11 @@
       "id": "a8b9"
     },
     {
-      "id": "d1c2",
       "name": "Valorant",
       "genre": "FPS",
       "size": "45GB",
-      "cover": "https://upload.wikimedia.org/wikipedia/commons/f/fc/Valorant_logo_-_pink_color_version_%28cropped%29.png"
+      "cover": "https://upload.wikimedia.org/wikipedia/commons/f/fc/Valorant_logo_-_pink_color_version_%28cropped%29.png",
+      "id": "d1c2"
     },
     {
       "name": "Stardew Valley",
@@ -84,10 +84,16 @@
       "password": "67"
     },
     {
+      "id": "32da",
+      "role": "admin",
+      "username": "admin",
+      "password": "adminpassword"
+    },
+    {
       "id": "c6b3",
       "role": "user",
       "username": "user",
-      "password": "userPassword"
+      "password": "userpassword"
     }
   ]
 }
