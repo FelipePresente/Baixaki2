@@ -2,7 +2,7 @@
 
 A secure, full-stack web application for managing a game catalog. Built with vanilla JavaScript and Node.js, focusing on clean architecture, security best practices (JWT), and responsive design.
 
-## 🚀 Key Features
+## ⚙️ Features
 
 *   **Authentication & Security:** Robust login system using **JWT** (JSON Web Tokens) verified via middlewares and stored in **HttpOnly Cookies** to prevent XSS attacks.
 *   **Role-Based Access:** Protected Admin Dashboard accessible only to users with elevated privileges.
@@ -23,7 +23,7 @@ A secure, full-stack web application for managing a game catalog. Built with van
 *   Cookie-Parser (Session Management)
 *   JSON Server (REST API Simulation)
 
-## 🏁 How to Run
+## 🚀 How to Run
 
 1.  **Install Dependencies**
     ```bash
