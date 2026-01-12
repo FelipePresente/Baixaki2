@@ -3,7 +3,7 @@ const header = document.querySelector("#header")
 
 // This function renders the games at 'localhost://2000/games' in 'localhost://8000/'
 function renderGames() {
-    fetch('http://localhost:2000/games')
+    fetch('/games')
         .then(res => res.json())
         .then(games => {
             games.forEach(game => {
@@ -38,37 +38,18 @@ function renderGames() {
         });
 } renderGames()
 
-// This function is a cookie caller
-function getCookie(name) {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop().split(';').shift();
-}
-
-// Just the user chilling before login
 let user
 
 // This function verifies and saves the user cookie
 function verifyCookie() {
     // It gives a name to the caught cookie 
-    const loggedUserCookie = getCookie('userCookie')
-    // It calls 'savedUser'
-    const savedUser = localStorage.getItem('savedUser')
+    const loggedUserCookie = getCookie('userInfo')
 
     if (loggedUserCookie) {
         try {
-            const decodeCookie = decodeURIComponent(loggedUserCookie)
-            // It saves the decoded cookie at 'savedUser'
-            localStorage.setItem('savedUser', decodeCookie)
-            user = JSON.parse(decodeCookie)
+            user = JSON.parse(decodeURIComponent(loggedUserCookie))
         } catch (error) {
             console.error("Error parsing loop cookie:", error)
-        }
-    } else if (savedUser) { // It verifies if everything is ok
-        try {
-            user = JSON.parse(savedUser)
-        } catch (error) {
-            console.error("Error parsing local storage user:", error)
         }
     }
 } verifyCookie()
@@ -76,9 +57,6 @@ function verifyCookie() {
 // This function renders the user at 'localhost://8000/'
 function renderUser() {
     if (user) {
-        // Kills the cookie right after successfull login 
-        document.cookie = "userCookie=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
-
         header.innerHTML += `<div class ="flex justify-center items-center gap-3">
         <div class ="font-bold">Welcome, ${user.username}!</div>
         <div class ="px-4 py-2 text-sm font-bold text-white bg-stone-500 rounded-lg hover:bg-stone-600 transition-colors shadow-sm cursor-pointer" id ="logout">Logout</div>
@@ -87,13 +65,12 @@ function renderUser() {
         const logoutBtn = document.getElementById("logout")
         if (logoutBtn) {
             logoutBtn.addEventListener("click", () => {
-                localStorage.removeItem("savedUser")
-                window.location.reload()
+                window.location.href = '/users/logout'
             })
         }
     } else {
         header.innerHTML += `<div class="flex items-center gap-4">
-                <a href="/signin" class="text-sm font-medium text-gray-600 hover:text-stone-500 transition-colors">Sign in</a>
+                <a href="/signup" class="text-sm font-medium text-gray-600 hover:text-stone-500 transition-colors">Sign up</a>
                 <a href="/login" class="px-4 py-2 text-sm font-bold text-white bg-stone-500 rounded-lg hover:bg-stone-600 transition-colors shadow-sm">Login</a>
             </div>`
     }

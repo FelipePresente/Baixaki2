@@ -1,42 +1,54 @@
 # Baixaki2
 
-![Status](https://img.shields.io/badge/status-educational-blue)
-![Node.js](https://img.shields.io/badge/Node.js-Express-green?logo=nodedotjs)
+A secure, full-stack web application for managing a game catalog. Built with vanilla JavaScript and Node.js, focusing on clean architecture, security best practices (JWT), and responsive design.
 
-A web application project focused on studying and testing **HTTP Methods**. This project integrates a simple frontend with a Node.js/Express backend and a JSON Server database.
+## 🚀 Key Features
 
-## 🚀 How to Run
+*   **Authentication & Security:** Robust login system using **JWT** (JSON Web Tokens) verified via middlewares and stored in **HttpOnly Cookies** to prevent XSS attacks.
+*   **Role-Based Access:** Protected Admin Dashboard accessible only to users with elevated privileges.
+*   **CRUD Operations:** Complete management (Create, Read, Update, Delete) of game entries.
+*   **Clean Code:** Implementation of **DRY**, **KISS**, and modular architecture (Router/Controller pattern).
+*   **Modern UI:** Responsive design using **Tailwind CSS**.
 
-To run the application correctly, you need to execute two separate processes (the database and the server).
+## 🛠️ Tech Stack
 
-**Please open two terminal windows and run the following commands:**
+**Frontend**
+*   HTML5 & CSS3
+*   JavaScript (ES6+)
+*   Tailwind CSS
 
-### Terminal 1: Database
-Start the simulated backend (JSON Server):
-```bash
-npm run backend
-```
-> *Runs on port 2000*
+**Backend**
+*   Node.js & Express
+*   JWT (Authentication)
+*   Cookie-Parser (Session Management)
+*   JSON Server (REST API Simulation)
 
-### Terminal 2: Server
-Start the application server:
-```bash
-npm run server
-```
-> *Runs on port 8000 (with Nodemon)*
+## 🏁 How to Run
 
-Access the application at `http://localhost:8000`.
+1.  **Install Dependencies**
+    ```bash
+    npm install
+    ```
 
----
+2.  **Start the Database (JSON Server)**
+    ```bash
+    npm run backend
+    ```
 
-## �️ Tech Stack
+3.  **Start the Application Server**
+    ```bash
+    npm run server
+    ```
 
-- **[Express](https://expressjs.com/)**: Fast, unopinionated, minimalist web framework for Node.js.
-- **[JSON Server](https://github.com/typicode/json-server)**: Get a full fake REST API with zero coding.
-- **Nodemon**: Utility that monitors for any changes in your source and automatically restarts your server.
+4.  **Access the App**
+    Open `http://localhost:8000` in your browser.
 
-## 📝 Notes
+## 👤 Credentials for Testing
 
-> **Design**: The interface design was polished with the help of **Gemini**.
+*   **Admin Access:**
+    *   Username: `admin`
+    *   Password: `adminpassword`
 
-> **Fun Fact**: You might notice a file named `or.txt`. It exists solely because my physical keyboard is missing the `|` (pipe) key! 😂
+*   **User Access:**
+    *   Username: `user`
+    *   Password: `userpassword`
