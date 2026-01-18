@@ -2,6 +2,7 @@ import express from 'express'
 import cookieParser from 'cookie-parser'
 import 'dotenv/config'
 import trimData from './middlewares/trimmer.js'
+import lowerCase from './middlewares/lowerCase.js'
 import roleVerification from './middlewares/auth.js'
 import gamesRouter from './routes/games.js'
 import usersRouter from './routes/users.js'
@@ -12,6 +13,7 @@ app.use(cookieParser())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(trimData)
+app.use(lowerCase)
 app.use('/games', gamesRouter)
 app.use('/users', usersRouter)
 

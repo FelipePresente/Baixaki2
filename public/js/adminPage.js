@@ -31,7 +31,9 @@ function renderGames() {
 const userInfo = getCookie('userInfo');
 if (userInfo) {
     try {
-        const user = JSON.parse(decodeURIComponent(userInfo));
+        const user = JSON.parse(decodeURIComponent(userInfo))
+        user.username = user.username.charAt(0).toUpperCase() + user.username.slice(1)
+
         header.innerHTML = `
             <a href="/" class="text-xl font-bold tracking-tight text-gray-900 hover:opacity-80 transition-opacity z-10">
                 Baixaki<span class="text-stone-500">2</span>

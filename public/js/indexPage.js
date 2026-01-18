@@ -57,6 +57,8 @@ function verifyCookie() {
 // This function renders the user at 'localhost://8000/'
 function renderUser() {
     if (user) {
+        user.username = user.username.charAt(0).toUpperCase() + user.username.slice(1)
+
         header.innerHTML += `<div class ="flex justify-center items-center gap-3">
         <div class ="font-bold">Welcome, ${user.username}!</div>
         <div class ="px-4 py-2 text-sm font-bold text-white bg-stone-500 rounded-lg hover:bg-stone-600 transition-colors shadow-sm cursor-pointer" id ="logout">Logout</div>
