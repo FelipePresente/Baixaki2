@@ -12,7 +12,7 @@ function renderGames() {
             tbody.innerHTML = ''
             games.forEach(game => {
                 tbody.innerHTML += `
-                <tr id="row-${game.id}" class="hover:bg-gray-50 transition-colors">
+                <tr id="row-${game._id}" class="hover:bg-gray-50 transition-colors">
                     <td class="px-6 py-4 whitespace-nowrap">
                         <img class="h-10 w-10 rounded object-cover" src="${game.cover}" alt="Cover">
                     </td>
@@ -20,8 +20,8 @@ function renderGames() {
                     <td class="px-6 py-4 whitespace-nowrap text-gray-500">${game.genre}</td>
                     <td class="px-6 py-4 whitespace-nowrap text-gray-500">${game.size}</td>
                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm">
-                        <button class="text-blue-600 cursor-pointer hover:text-blue-900 font-medium mr-4 transition-colors" onclick="editGame('${game.id}', '${game.name}', '${game.genre}', '${game.size}', '${game.cover}')">Edit</button>
-                        <button class="text-red-600 cursor-pointer hover:text-red-900 font-medium transition-colors" onclick="deleteGame('${game.id}')">Delete</button>
+                        <button class="text-blue-600 cursor-pointer hover:text-blue-900 font-medium mr-4 transition-colors" onclick="editGame('${game._id}', '${game.name}', '${game.genre}', '${game.size}', '${game.cover}')">Edit</button>
+                        <button class="text-red-600 cursor-pointer hover:text-red-900 font-medium transition-colors" onclick="deleteGame('${game._id}')">Delete</button>
                     </td>
                 </tr>`
             })

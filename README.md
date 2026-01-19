@@ -1,27 +1,30 @@
 # Baixaki2
 
-A secure, full-stack web application for managing a game catalog. Built with vanilla JavaScript and Node.js, focusing on clean architecture, security best practices (JWT), and responsive design.
+A secure, full-stack web application designed for managing a digital game catalog. Built with **Node.js** and **MongoDB**, this project emphasizes clean architecture, robust security practices, and professional REST API standards.
 
 ## ⚙️ Features
 
-*   **Authentication & Security:** Robust login system using **JWT** (JSON Web Tokens) verified via middlewares and stored in **HttpOnly Cookies** to prevent XSS attacks.
-*   **Role-Based Access:** Protected Admin Dashboard accessible only to users with elevated privileges.
-*   **CRUD Operations:** Complete management (Create, Read, Update, Delete) of game entries.
-*   **Clean Code:** Implementation of **DRY**, **KISS**, and modular architecture (Router/Controller pattern).
-*   **Modern UI:** Responsive design using **Tailwind CSS**.
+*   **Advanced Security:**
+    *   Authentication via **JWT** (JSON Web Tokens) stored in **HttpOnly Cookies** to prevent XSS.
+    *   **Role-Based Access Control (RBAC)** protecting Admin routes.
+    *   Data sanitization middlewares to normalize inputs and prevent injection risks.
+*   **Robust Backend:** 
+    *   **MongoDB + Mongoose** for scalable data persistence and strict Schema Validation.
+*   **Clean Architecture:** Modular structure separating Routes, Models (Schemas), and Middlewares.
+*   **Modern UI:** Responsive interface designed with **Tailwind CSS**.
 
 ## 🛠️ Tech Stack
+
+**Backend**
+*   **Runtime:** Node.js & Express.js
+*   **Database:** MongoDB Atlas & Mongoose ODM
+*   **Authentication:** JSON Web Tokens (JWT) & Cookie-Parser
+*   **Utilities:** Dotenv
 
 **Frontend**
 *   HTML5 & CSS3
 *   JavaScript (ES6+)
-*   Tailwind CSS
-
-**Backend**
-*   Node.js & Express
-*   JWT (Authentication)
-*   Cookie-Parser (Session Management)
-*   JSON Server (REST API Simulation)
+*   Tailwind CSS (CDN/Integration)
 
 ## 🚀 How to Run
 
@@ -30,17 +33,12 @@ A secure, full-stack web application for managing a game catalog. Built with van
     npm install
     ```
 
-2.  **Start the Database (JSON Server)**
-    ```bash
-    npm run backend
-    ```
-
-3.  **Start the Application Server**
+2.  **Start the Server**
     ```bash
     npm run server
     ```
 
-4.  **Access the App**
+3.  **Access the Application**
     Open `http://localhost:8000` in your browser.
 
 ## 👤 Credentials for Testing
