@@ -18,7 +18,7 @@
 
         <!-- Games info -->
         <section class="w-full max-w-5xl px-4 relative" id="gamesSec">
-            <div class="flex justify-end mb-6">
+            <div class="flex justify-end mb-6" id="addBtnContainer">
                 <button
                     class="bg-black text-white cursor-pointer px-5 py-2.5 rounded-lg text-sm font-medium hover:bg-gray-800 transition-colors shadow-sm flex items-center gap-2"
                     id="addGame">
@@ -26,7 +26,8 @@
                 </button>
             </div>
 
-            <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden overflow-x-auto">
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden overflow-x-auto"
+                id="tableContainer">
                 <table class="w-full text-left border-collapse" id="gamesTable">
                     <thead class="bg-gray-50/50 border-b border-gray-100">
                         <tr>
@@ -45,12 +46,112 @@
                     </tbody>
                 </table>
             </div>
+
+            <!-- Add Game Form -->
+            <div id="addGameFormContainer"
+                class="hidden bg-white rounded-xl shadow-sm border border-gray-100 p-8 max-w-2xl mx-auto">
+                <div class="flex justify-between items-center mb-8">
+                    <h2 class="text-xl font-bold text-gray-900">Add New Game</h2>
+                    <button type="button"
+                        class="btn-cancel text-gray-500 hover:text-gray-700 font-medium text-sm transition-colors cursor-pointer">Cancel</button>
+                </div>
+                <form class="space-y-6" action="/games/add" method="POST">
+                    <div>
+                        <label for="add-name" class="block text-sm font-medium text-gray-700 mb-2">Game Name</label>
+                        <input type="text" name="name" id="add-name" required
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg" placeholder="e.g. Minecraft">
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="add-genre" class="block text-sm font-medium text-gray-700 mb-2">Genre</label>
+                            <input type="text" name="genre" id="add-genre" required
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg" placeholder="e.g. Adventure">
+                        </div>
+                        <div>
+                            <label for="add-size" class="block text-sm font-medium text-gray-700 mb-2">Size</label>
+                            <input type="text" name="size" id="add-size" required
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg" placeholder="e.g. 2GB">
+                        </div>
+                    </div>
+                    <div>
+                        <label for="add-cover" class="block text-sm font-medium text-gray-700 mb-2">Cover Image
+                            URL</label>
+                        <input type="url" name="cover" id="add-cover" required
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg" placeholder="https://...">
+                    </div>
+                    <div class="pt-4 flex justify-end">
+                        <button type="submit"
+                            class="bg-black text-white px-6 py-2.5 rounded-lg font-medium hover:bg-gray-800 transition-colors">Save
+                            Game</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Edit Game Form -->
+            <div id="editGameFormContainer"
+                class="hidden bg-white rounded-xl shadow-sm border border-gray-100 p-8 max-w-2xl mx-auto">
+                <div class="flex justify-between items-center mb-8">
+                    <h2 class="text-xl font-bold text-gray-900">Edit Game</h2>
+                    <button type="button"
+                        class="btn-cancel text-gray-500 hover:text-gray-700 font-medium text-sm transition-colors cursor-pointer">Cancel</button>
+                </div>
+                <form class="space-y-6" id="editGameForm">
+                    <input type="hidden" name="id" id="edit-id">
+                    <div>
+                        <label for="edit-name" class="block text-sm font-medium text-gray-700 mb-2">Game Name</label>
+                        <input type="text" id="edit-name" required
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg">
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="edit-genre" class="block text-sm font-medium text-gray-700 mb-2">Genre</label>
+                            <input type="text" id="edit-genre" required
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg">
+                        </div>
+                        <div>
+                            <label for="edit-size" class="block text-sm font-medium text-gray-700 mb-2">Size</label>
+                            <input type="text" id="edit-size" required
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg">
+                        </div>
+                    </div>
+                    <div>
+                        <label for="edit-cover" class="block text-sm font-medium text-gray-700 mb-2">Cover Image
+                            URL</label>
+                        <input type="url" id="edit-cover" required
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg">
+                    </div>
+                    <div class="pt-4 flex justify-end">
+                        <button type="submit"
+                            class="bg-black text-white px-6 py-2.5 rounded-lg font-medium hover:bg-gray-800 transition-colors">Save
+                            Changes</button>
+                    </div>
+                </form>
+            </div>
         </section>
 
     </main>
 
+    <!-- Delete Modal -->
+    <div id="deleteModal"
+        class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50">
+        <div class="bg-white rounded-xl shadow-2xl p-6 max-w-sm w-full mx-4">
+            <div class="text-center">
+                <h3 class="text-lg font-bold text-gray-900 mb-2">Delete Game</h3>
+                <p class="text-sm text-gray-500 mb-6">This action is <span
+                        class="font-medium text-red-600">irreversible</span>.</p>
+                <form class="flex justify-center gap-3" id="deleteGameForm">
+                    <input type="hidden" name="id" id="delete-id">
+                    <button type="button" id="cancelDelete"
+                        class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-lg">Cancel</button>
+                    <button type="submit"
+                        class="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-lg">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <script src="../js/utils.js"></script>
-    <script src="../js/adminPage.js"></script>
+    <script src="../js/admin.js" type="module"></script>
 
 </body>
 

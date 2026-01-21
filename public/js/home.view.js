@@ -1,13 +1,5 @@
-const gamesGrid = document.querySelector("#gamesGrid")
-const header = document.querySelector("#header")
-
-// This function renders the games at 'localhost://2000/games' in 'localhost://8000/'
-function renderGames() {
-    fetch('/games')
-        .then(res => res.json())
-        .then(games => {
-            games.forEach(game => {
-                gamesGrid.innerHTML += `
+export function renderGameCard(game) {
+    return `
             <div class="flex items-start cursor-pointer gap-4 p-4 rounded-lg border border-gray-100 bg-white hover:border-stone-300 transition-colors group">
                 <div class="w-16 h-16 shrink-0 bg-gray-50 rounded-lg flex items-center justify-center text-2xl border border-gray-100 group-hover:bg-stone-100 group-hover:text-stone-500 transition-colors bg-center bg-cover">
                     <img src ="${game.cover}">
@@ -34,46 +26,18 @@ function renderGames() {
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
                 </button>
             </div>`
-            })
-        });
-} renderGames()
+}
 
-let user
-
-// This function verifies and saves the user cookie
-function verifyCookie() {
-    // It gives a name to the caught cookie 
-    const loggedUserCookie = getCookie('userInfo')
-
-    if (loggedUserCookie) {
-        try {
-            user = JSON.parse(decodeURIComponent(loggedUserCookie))
-        } catch (error) {
-            console.error("Error parsing loop cookie:", error)
-        }
-    }
-} verifyCookie()
-
-// This function renders the user at 'localhost://8000/'
-function renderUser() {
-    if (user) {
-        user.username = user.username.charAt(0).toUpperCase() + user.username.slice(1)
-
-        header.innerHTML += `<div class ="flex justify-center items-center gap-3">
-        <div class ="font-bold">Welcome, ${user.username}!</div>
-        <div class ="px-4 py-2 text-sm font-bold text-white bg-stone-500 rounded-lg hover:bg-stone-600 transition-colors shadow-sm cursor-pointer" id ="logout">Logout</div>
+export function renderUserHeader(user) {
+    return `<div class ="flex justify-center items-center gap-3">
+    <div class ="font-bold">Welcome, ${user.username}!</div>
+    <div class ="px-4 py-2 text-sm font-bold text-white bg-stone-500 rounded-lg hover:bg-stone-600 transition-colors shadow-sm cursor-pointer" id ="logout">Logout</div>
     </div>`
+}
 
-        const logoutBtn = document.getElementById("logout")
-        if (logoutBtn) {
-            logoutBtn.addEventListener("click", () => {
-                window.location.href = '/users/logout'
-            })
-        }
-    } else {
-        header.innerHTML += `<div class="flex items-center gap-4">
+export function renderGuestHeader() {
+    return `<div class="flex items-center gap-4">
                 <a href="/signup" class="text-sm font-medium text-gray-600 hover:text-stone-500 transition-colors">Sign up</a>
                 <a href="/login" class="px-4 py-2 text-sm font-bold text-white bg-stone-500 rounded-lg hover:bg-stone-600 transition-colors shadow-sm">Login</a>
             </div>`
-    }
-} renderUser()
+}

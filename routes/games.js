@@ -11,7 +11,6 @@ router.get('/', async (req, res) => {
   res.json(games)
 })
 
-// Here, there is a basic system to require the info from the form and add in the database
 router.post('/add', async (req, res) => {
   await roleVerification(req, res, addGame)
 
@@ -24,43 +23,46 @@ router.post('/add', async (req, res) => {
 
     try {
       const busyName = await Game.findOne({ "name": name })
-      
+
       if (busyName) {
         return res.status(409).send("There is already a game with that name")
       }
 
       await Game.create({ "name": name, "genre": genre, "size": size, "cover": cover })
       res.redirect('/admin')
-
     } catch (error) {
       res.status(500).send("Error trying to add game")
     }
   }
 })
 
-// It basically requires the info from the form, check it and edit the database
-router.post('/edit', async (req, res) => {
+router.patch('/:id', async (req, res) => {
   await roleVerification(req, res, editGame)
 
   async function editGame() {
-    const { id, name, genre, size, cover } = req.body
+    const { id } = req.params
+    const { name, genre, size, cover } = req.body
 
     if (!id || !name || !genre || !size || !cover) {
       return res.status(400).send("All fields must be filled")
     }
 
     try {
-      const updatedGame = { "_id": id, "name": name, "genre": genre, "size": size, "cover": cover }
-      await Game.findByIdAndUpdate(id, updatedGame)
-      res.redirect('/admin')
+      const gameData = { name, genre, size, cover }
+      const updated = await Game.findByIdAndUpdate(id, gameData, { new: true })
+
+      if (!updated) {
+        return res.status(404).send("Game not found")
+      }
+
+      res.status(200).json({ message: "Game updated successfully!" })
     } catch (error) {
       res.status(500).send("Error trying to edit game")
     }
   }
 })
 
-// It deletes a game from the database
-router.post('/delete', async (req, res) => {
+router.delete('/:id', async (req, res) => {
   await roleVerification(req, res, deleteGame)
 
   async function deleteGame() {
@@ -78,8 +80,7 @@ router.post('/delete', async (req, res) => {
       }
 
       await Game.deleteOne(target)
-      res.redirect('/admin')
-
+      res.status(200).json({ message: "Game was succesfully deleted" })
     } catch (error) {
       res.status(500).send("Error trying to delete game")
     }
