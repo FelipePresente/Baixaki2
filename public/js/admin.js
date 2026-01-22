@@ -88,9 +88,7 @@ document.querySelector("#deleteGameForm").onsubmit = async (e) => {
     const id = document.querySelector("#delete-id").value
 
     await fetch(`/games/${id}`, {
-        method: 'DELETE',
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id })
+        method: 'DELETE'
     })
     window.location.reload()
 }

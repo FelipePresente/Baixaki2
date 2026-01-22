@@ -49,11 +49,13 @@ router.patch('/:id', async (req, res) => {
 
     try {
       const gameData = { name, genre, size, cover }
-      const updated = await Game.findByIdAndUpdate(id, gameData, { new: true })
+      const target = await Game.findOne({ "_id": id })
 
-      if (!updated) {
+      if (!target) {
         return res.status(404).send("Game not found")
       }
+
+      await Game.updateOne(target, gameData, { new: true })
 
       res.status(200).json({ message: "Game updated successfully!" })
     } catch (error) {
@@ -66,7 +68,7 @@ router.delete('/:id', async (req, res) => {
   await roleVerification(req, res, deleteGame)
 
   async function deleteGame() {
-    const { id } = req.body
+    const { id } = req.params
 
     if (!id) {
       return res.status(400).send("Invalid ID")
