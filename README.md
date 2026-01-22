@@ -2,6 +2,10 @@
 
 A secure, full-stack web application designed for managing a digital game catalog. Built with **Node.js** and **MongoDB**, this project emphasizes clean architecture, robust security practices, and professional REST API standards.
 
+### 🌐 [Live Preview: baixaki2.onrender.com](https://baixaki2.onrender.com/)
+
+---
+
 ## ⚙️ Features
 
 *   **Advanced Security:**
@@ -40,7 +44,8 @@ A secure, full-stack web application designed for managing a digital game catalo
     ```
 
 3.  **Access the Application**
-    Open `http://localhost:8000` in your browser.
+    *   **Live Preview:** [https://baixaki2.onrender.com/](https://baixaki2.onrender.com/)
+    *   **Local:** Open `http://localhost:8000` in your browser.
 
 ## 👤 Credentials for Testing
 
@@ -51,13 +56,3 @@ A secure, full-stack web application designed for managing a digital game catalo
 *   **User Access:**
     *   Username: `user`
     *   Password: `userpassword`
-
----
-
-### 🛡️ Security Note
-
-For demonstration purposes, the `.env` file is intentionally included in this repository. This allows for an immediate "out-of-the-box" testing experience without the need for manual database configuration or environment setup. 
-
-**In a production environment**, the `.env` file and its sensitive contents (Database URIs, JWT Secret Keys) would be strictly excluded from version control via `.gitignore` and managed through secure Environment Variables on the hosting platform.
-
----
