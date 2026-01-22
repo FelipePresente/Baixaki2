@@ -9,7 +9,6 @@ const router = express.Router()
 const secret_key = process.env.SECRET_KEY
 const db_url = process.env.DB_URL
 
-// That is the section where the account creation is verified and, then, done.
 router.post('/signup', async (req, res) => {
     let { username, password, confirmPassword } = req.body
 
@@ -20,8 +19,12 @@ router.post('/signup', async (req, res) => {
     if (password !== confirmPassword) return res.status(400).send("Passwords do not match")
     if (password.includes(" ")) return res.status(400).send("Password must not contain spaces")
 
-        
-        try {
+
+    try {
+        const foundUser = await User.findOne({ "username": username })
+
+        if (foundUser) return res.status(400).send("Username already exists")
+
         const hash = await hashPassword(password)
         const newUser = { "username": username, "password": hash }
 
@@ -34,7 +37,6 @@ router.post('/signup', async (req, res) => {
 
 })
 
-// Here, there is basically the same test method, but it is to login into an account
 router.post('/login', async (req, res) => {
     let { username, password } = req.body
 
