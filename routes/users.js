@@ -1,6 +1,8 @@
 import express from 'express'
 import mongoose from 'mongoose'
 import User from '../models/User.js'
+import hashPassword from '../middlewares/hashPassword.js'
+import comparePassword from '../middlewares/comparePassword.js'
 import jwt from 'jsonwebtoken'
 
 const router = express.Router()
@@ -18,9 +20,13 @@ router.post('/signup', async (req, res) => {
     if (password !== confirmPassword) return res.status(400).send("Passwords do not match")
     if (password.includes(" ")) return res.status(400).send("Password must not contain spaces")
 
-    try {
-        const newUser = { "username": username, "password": password }
+        
+        try {
+        const hash = await hashPassword(password)
+        const newUser = { "username": username, "password": hash }
+
         await User.create(newUser)
+
         res.redirect('/')
     } catch (error) {
         res.status(500).send("Error creating user")
@@ -37,11 +43,15 @@ router.post('/login', async (req, res) => {
     if (password.includes(" ")) return res.status(400).send("Password must not contain spaces")
 
     try {
-        const foundUser = await User.findOne({ "username": username, "password": password })
+        const foundUser = await User.findOne({ "username": username })
 
         if (!foundUser) {
             return res.status(401).send("Invalid credentials")
         }
+
+        const comparation = await comparePassword(password, foundUser.password)
+
+        if (!comparation) return res.status(401).send("Invalid credentials")
 
         const token = jwt.sign(
             {

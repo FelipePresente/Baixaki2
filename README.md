@@ -6,6 +6,7 @@ A secure, full-stack web application designed for managing a digital game catalo
 
 *   **Advanced Security:**
     *   Authentication via **JWT** (JSON Web Tokens) stored in **HttpOnly Cookies** to prevent XSS.
+    *   **Password Hashing** with **Bcrypt** for secure data storage.
     *   **Role-Based Access Control (RBAC)** protecting Admin routes.
     *   Data sanitization middlewares to normalize inputs and prevent injection risks.
 *   **Robust Backend:** 
@@ -18,8 +19,8 @@ A secure, full-stack web application designed for managing a digital game catalo
 **Backend**
 *   **Runtime:** Node.js & Express.js
 *   **Database:** MongoDB Atlas & Mongoose ODM
-*   **Authentication:** JSON Web Tokens (JWT) & Cookie-Parser
-*   **Utilities:** Dotenv
+*   **Security:** Bcrypt (Hashing) & JSON Web Tokens (JWT)
+*   **Utilities:** Dotenv & Cookie-Parser
 
 **Frontend**
 *   HTML5 & CSS3
@@ -50,3 +51,13 @@ A secure, full-stack web application designed for managing a digital game catalo
 *   **User Access:**
     *   Username: `user`
     *   Password: `userpassword`
+
+---
+
+### 🛡️ Security Note
+
+For demonstration purposes, the `.env` file is intentionally included in this repository. This allows for an immediate "out-of-the-box" testing experience without the need for manual database configuration or environment setup. 
+
+**In a production environment**, the `.env` file and its sensitive contents (Database URIs, JWT Secret Keys) would be strictly excluded from version control via `.gitignore` and managed through secure Environment Variables on the hosting platform.
+
+---

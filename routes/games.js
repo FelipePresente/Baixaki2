@@ -4,8 +4,6 @@ import Game from '../models/Game.js'
 import roleVerification from '../middlewares/auth.js'
 const router = express.Router()
 
-const db_url = process.env.DB_URL
-
 router.get('/', async (req, res) => {
   const games = await Game.find()
   res.json(games)
