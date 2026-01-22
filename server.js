@@ -34,7 +34,9 @@ app.use('/admin', (req, res, next) => {
 // It sets the website content to the public folder
 app.use(express.static('public'))
 
+const PORT = process.env.PORT || 8000
+
 mongoose.connect(db_url)
   .then(() => {
-    app.listen(8000)
+    app.listen(PORT)
   })
