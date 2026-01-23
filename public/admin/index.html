@@ -55,7 +55,7 @@
                     <button type="button"
                         class="btn-cancel text-gray-500 hover:text-gray-700 font-medium text-sm transition-colors cursor-pointer">Cancel</button>
                 </div>
-                <form class="space-y-6" action="/games/add" method="POST">
+                <form class="space-y-6" id="addGameForm">
                     <div>
                         <label for="add-name" class="block text-sm font-medium text-gray-700 mb-2">Game Name</label>
                         <input type="text" name="name" id="add-name" required
@@ -81,7 +81,7 @@
                     </div>
                     <div class="pt-4 flex justify-end">
                         <button type="submit"
-                            class="bg-black text-white px-6 py-2.5 rounded-lg font-medium hover:bg-gray-800 transition-colors">Save
+                            class="bg-black text-white px-6 py-2.5 rounded-lg font-medium hover:bg-gray-800 transition-colors cursor-pointer">Save
                             Game</button>
                     </div>
                 </form>
@@ -122,7 +122,7 @@
                     </div>
                     <div class="pt-4 flex justify-end">
                         <button type="submit"
-                            class="bg-black text-white px-6 py-2.5 rounded-lg font-medium hover:bg-gray-800 transition-colors">Save
+                            class="bg-black text-white px-6 py-2.5 rounded-lg font-medium hover:bg-gray-800 transition-colors cursor-pointer">Save
                             Changes</button>
                     </div>
                 </form>
@@ -142,9 +142,9 @@
                 <form class="flex justify-center gap-3" id="deleteGameForm">
                     <input type="hidden" name="id" id="delete-id">
                     <button type="button" id="cancelDelete"
-                        class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-lg">Cancel</button>
+                        class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-lg cursor-pointer">Cancel</button>
                     <button type="submit"
-                        class="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-lg">Delete</button>
+                        class="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-lg cursor-pointer">Delete</button>
                 </form>
             </div>
         </div>

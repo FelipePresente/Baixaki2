@@ -9,7 +9,7 @@ router.get('/', async (req, res) => {
   res.json(games)
 })
 
-router.post('/add', async (req, res) => {
+router.post('/', async (req, res) => {
   await roleVerification(req, res, addGame)
 
   async function addGame() {
@@ -26,8 +26,11 @@ router.post('/add', async (req, res) => {
         return res.status(409).send("There is already a game with that name")
       }
 
-      await Game.create({ "name": name, "genre": genre, "size": size, "cover": cover })
-      res.redirect('/admin')
+      const newGame = { "name": name, "genre": genre, "size": size, "cover": cover }
+
+      await Game.create(newGame)
+
+      res.status(200).json({ message: "Game created succesfully" })
     } catch (error) {
       res.status(500).send("Error trying to add game")
     }

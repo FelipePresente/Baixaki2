@@ -40,6 +40,25 @@ function showSection(id) {
 // Add Game
 addBtn.onclick = () => showSection('addGameFormContainer')
 
+document.querySelector("#addGameForm").onsubmit = async (e) => {
+    e.preventDefault()
+
+    const name = document.querySelector("#add-name").value
+    const genre = document.querySelector("#add-genre").value
+    const size = document.querySelector("#add-size").value
+    const cover = document.querySelector("#add-cover").value
+
+    const newGame = { "name": name, "genre": genre, "size": size, "cover": cover }
+
+    await fetch('/games', {
+        method: 'POST',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newGame)
+    })
+
+    window.location.reload()
+}
+
 // Cancel Buttons
 document.querySelectorAll(".btn-cancel").forEach(btn => {
     btn.onclick = () => showSection('tableContainer')
@@ -71,6 +90,7 @@ document.querySelector("#editGameForm").onsubmit = async (e) => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data)
     })
+    
     window.location.reload()
 }
 
@@ -90,5 +110,6 @@ document.querySelector("#deleteGameForm").onsubmit = async (e) => {
     await fetch(`/games/${id}`, {
         method: 'DELETE'
     })
+
     window.location.reload()
 }

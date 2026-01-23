@@ -37,7 +37,7 @@ export function renderUserHeader(user) {
 
 export function renderGuestHeader() {
     return `<div class="flex items-center gap-4">
-                <a href="/signup" class="text-sm font-medium text-gray-600 hover:text-stone-500 transition-colors">Sign up</a>
-                <a href="/login" class="px-4 py-2 text-sm font-bold text-white bg-stone-500 rounded-lg hover:bg-stone-600 transition-colors shadow-sm">Login</a>
+                <a href="/signup" class="text-sm font-medium text-gray-600 hover:text-stone-500 transition-colors cursor-pointer">Sign up</a>
+                <a href="/login" class="px-4 py-2 text-sm font-bold text-white bg-stone-500 rounded-lg hover:bg-stone-600 transition-colors shadow-sm cursor-pointer">Login</a>
             </div>`
 }
