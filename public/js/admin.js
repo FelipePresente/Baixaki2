@@ -48,12 +48,15 @@ document.querySelector("#addGameForm").onsubmit = async (e) => {
     const size = document.querySelector("#add-size").value
     const cover = document.querySelector("#add-cover").value
 
-    const newGame = { "name": name, "genre": genre, "size": size, "cover": cover }
-
     await fetch('/games', {
         method: 'POST',
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newGame)
+        body: JSON.stringify({
+            name,
+            genre,
+            size,
+            cover
+        })
     })
 
     window.location.reload()
