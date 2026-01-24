@@ -19,15 +19,15 @@ const user = checkSession()
 function renderUser() {
     if (!user) return header.innerHTML += renderGuestHeader()
 
-        user.username = user.username.charAt(0).toUpperCase() + user.username.slice(1)
+    user.username = user.username.charAt(0).toUpperCase() + user.username.slice(1)
 
-        header.innerHTML += renderUserHeader(user)
+    header.innerHTML += renderUserHeader(user)
 
-        const logoutBtn = document.getElementById("logout")
+    const logoutBtn = document.getElementById("logout")
 
-        if (logoutBtn) {
-            logoutBtn.addEventListener("click", () => {
-                window.location.href = '/users/logout'
-            })
-        }
+    if (logoutBtn) {
+        logoutBtn.addEventListener("click", () => {
+            window.location.href = '/users/logout'
+        })
+    }
 } renderUser()

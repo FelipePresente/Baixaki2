@@ -15,10 +15,11 @@ router.post('/signup', async (req, res) => {
     // Validation
     if (!username || !password || !confirmPassword) return res.status(400).send("All fields are required")
     if (username.length < 4) return res.status(400).send("Username must be at least 4 characters long")
+    if (username.length > 12) return res.status(400).send("Username maximum number of characters is 12")
     if (password.length < 8) return res.status(400).send("Password must be at least 8 characters long")
+    if (password.length > 35) return res.status(400).send("Password maximum number of characters is 35")
     if (password !== confirmPassword) return res.status(400).send("Passwords do not match")
     if (password.includes(" ")) return res.status(400).send("Password must not contain spaces")
-
 
     try {
         const foundUser = await User.findOne({ "username": username })
@@ -42,14 +43,14 @@ router.post('/login', async (req, res) => {
 
     // Validation
     if (!username || !password) return res.status(400).send("Username and password are required")
+    if (username.length > 12) return res.status(400).send("Username maximum number of characters is 12")
+    if (password.length > 35) return res.status(400).send("Password maximum number of characters is 35")
     if (password.includes(" ")) return res.status(400).send("Password must not contain spaces")
 
     try {
         const foundUser = await User.findOne({ "username": username })
 
-        if (!foundUser) {
-            return res.status(401).send("Invalid credentials")
-        }
+        if (!foundUser) return res.status(401).send("Invalid credentials")
 
         const comparation = await comparePassword(password, foundUser.password)
 
@@ -67,11 +68,9 @@ router.post('/login', async (req, res) => {
         res.cookie('userCookie', token, { httpOnly: true, maxAge: 60 * 60 * 24 * 14 })
         res.cookie('userInfo', JSON.stringify({ username: foundUser.username }), { httpOnly: false, maxAge: 60 * 60 * 24 * 14 })
 
-        if (foundUser.role === "admin") {
-            res.redirect('/admin')
-        } else {
-            res.redirect('/')
-        }
+        if (foundUser.role !== "admin") return res.redirect('/')
+
+        res.redirect('/admin')
     } catch (error) {
         res.status(500).send("Error logging in")
     }

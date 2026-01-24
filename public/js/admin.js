@@ -90,7 +90,7 @@ document.querySelector("#editGameForm").onsubmit = async (e) => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data)
     })
-    
+
     window.location.reload()
 }
 
