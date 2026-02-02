@@ -3,8 +3,7 @@ import User from '../models/User.js'
 
 const secret_key = process.env.SECRET_KEY
 
-// It reades the userCookie to verify its role
-export default async function roleVerification(req, res, actionCallback) {
+export default async function auth(req, res, next) {
   const token = req.cookies.userCookie
 
   if (!token) return res.status(401).send("Unauthorized")
@@ -16,7 +15,7 @@ export default async function roleVerification(req, res, actionCallback) {
     if (!userFromDB) return res.redirect('/users/logout')
     if (userFromDB.role !== 'admin') return res.status(401).send("Unauthorized")
 
-    await actionCallback()
+    next()
   } catch (error) {
     res.clearCookie('userInfo')
     res.clearCookie('userCookie')

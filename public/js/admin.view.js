@@ -5,7 +5,7 @@ export function renderAdminHeader(userName) {
             Baixaki<span class="text-stone-500">2</span>
         </a>
         <div class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
-            <span class="font-bold text-gray-900 text-lg tracking-tight">Admin Area</span>
+            <span class="font-bold text-gray-900 max-sm:hidden text-lg tracking-tight">Admin Area</span>
         </div>
         <p class="font-medium text-gray-600 z-10">
             You are logged in as <span class="text-black font-bold">${userName}</span>

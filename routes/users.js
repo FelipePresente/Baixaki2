@@ -1,5 +1,4 @@
 import express from 'express'
-import mongoose from 'mongoose'
 import User from '../models/User.js'
 import hashPassword from '../middlewares/hashPassword.js'
 import comparePassword from '../middlewares/comparePassword.js'
@@ -7,7 +6,6 @@ import jwt from 'jsonwebtoken'
 
 const router = express.Router()
 const secret_key = process.env.SECRET_KEY
-const db_url = process.env.DB_URL
 
 router.post('/signup', async (req, res) => {
     let { username, password, confirmPassword } = req.body

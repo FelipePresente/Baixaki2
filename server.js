@@ -5,7 +5,7 @@ import 'dotenv/config'
 import trimData from './middlewares/trimmer.js'
 import lowerCase from './middlewares/lowerCase.js'
 import upperCase from './middlewares/upperCase.js'
-import roleVerification from './middlewares/auth.js'
+import auth from './middlewares/auth.js'
 import gamesRouter from './routes/games.js'
 import usersRouter from './routes/users.js'
 
@@ -22,13 +22,11 @@ app.use('/users', usersRouter)
 
 const db_url = process.env.DB_URL
 
-// It calls the role verification middleware
-app.use('/admin', (req, res, next) => {
+// It calls the auth middleware
+app.use('/admin', auth, (req, res, next) => {
   res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private')
 
-  roleVerification(req, res, () => {
-    next()
-  })
+  next()
 })
 
 // It sets the website content to the public folder
