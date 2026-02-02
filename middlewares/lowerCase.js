@@ -1,7 +1,7 @@
 export default async function lowerCase(req, res, next) {
     let data = req.body
 
-    const safeFields = ['username']
+    const safeFields = ['username', 'email']
 
     for (const key in data) {
         if (safeFields.includes(key) && typeof data[key] === 'string') {

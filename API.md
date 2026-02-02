@@ -1,172 +1,129 @@
-# API Documentation
+# System & API Documentation
 
-This documentation details the endpoints available in the Baixaki2 application.
-
-## Authentication & Authorization
-
-- **Authentication Method:** JWT (JSON Web Tokens) stored in HttpOnly Cookies (`userCookie`).
-- **Authorization:** Protected routes require a valid JWT token. Admin routes additionally verify the user role.
-- **Client-Side:** Public user information is stored in a non-HttpOnly cookie (`userInfo`) for UI checks.
+This document provides a comprehensive overview of the **Baixaki2** system architecture, including its backend components, data models, middleware pipeline, and API endpoints.
 
 ---
 
-## Users
+## System Architecture
 
-### 1. User Registration
+The application is a **Node.js** web server built with **Express**, following a Modular Monolithic architecture. It connects to a **MongoDB** database using **Mongoose** as the ODM (Object Data Modeling) library.
+
+### Core Components
+
+#### 1. Server Entry Point (`server.js`)
+The `server.js` file is the backbone of the application. It initializes the Express app and configures:
+- **Database Connection:** Connects to MongoDB Atlas via `mongoose.connect()`.
+- **Global Middleware:** Applies parsing and sanitization layers to every request.
+- **Route Mounting:** Defines the base paths for `/games` and `/users`.
+- **Static Assets:** Serves frontend files from the `public/` directory.
+- **Admin Security:** Protects the `/admin` route with the `auth` middleware and strict Cache-Control headers to prevent sensitive data caching.
+
+### 2. Database Models (`models/`)
+All data schemas are strict and managed via Mongoose.
+
+- **User Model (`User.js`)**
+    - `username`: String (Unique, Required)
+    - `password`: String (Required, Hashed)
+    - `role`: String (Default: 'user') - Controls access levels.
+
+- **Game Model (`Game.js`)**
+    - `name`: String (Required)
+    - `genre`: String (Required)
+    - `size`: String (Required)
+    - `cover`: String (Required, URL)
+
+---
+
+## Middleware Pipeline
+
+Middlewares intercept requests to process data, handle security, or manage flow before reaching the route handlers.
+
+### Global Middlewares (Applied to all routes)
+
+| Middleware | File | Description |
+| :--- | :--- | :--- |
+| **Trimmer** | `middlewares/trimmer.js` | Removes leading/trailing whitespace from **all** string fields in `req.body`. |
+| **LowerCase** | `middlewares/lowerCase.js` | Converts the `username` and `email` fields to lowercase to ensure consistency. |
+| **UpperCase** | `middlewares/upperCase.js` | Converts the `size` field (e.g., "12gb" -> "12GB") to uppercase for standardization. |
+
+### Security & Utility Middlewares
+
+| Middleware/Utility | File | Description |
+| :--- | :--- | :--- |
+| **Auth (Admin Guard)** | `middlewares/auth.js` | Verifies JWT tokens from `userCookie`. Checks if the user exists in DB and ensures the user has the `'admin'` role. If valid, allows access; otherwise, denies it (401) or redirects. |
+| **Hash Password** | `middlewares/hashPassword.js` | Uses `bcrypt` to securely hash passwords (salt rounds: 12) before saving to the DB. |
+| **Compare Password** | `middlewares/comparePassword.js` | Uses `bcrypt` to compare a plaintext password with the stored hash during login. |
+
+---
+
+## API Endpoints
+
+### Authentication & Authorization
+
+- **Authentication Method:** JWT (JSON Web Tokens) stored in HttpOnly Cookies (`userCookie`).
+- **Authorization:** 
+    - **Protected Routes:** Require a valid JWT.
+    - **Admin Routes:** Require role `'admin'`.
+- **Client-Side:** Public user information is stored in a non-HttpOnly cookie (`userInfo`) for UI logic.
+
+### Users (`/users`)
+
+#### 1. Register User
 Creates a new user account.
 
 - **URL:** `/users/signup`
 - **Method:** `POST`
-- **Content-Type:** `application/x-www-form-urlencoded` or `application/json`
+- **Sanitization:** Auto-trims inputs; `username` converts to lowercase.
+- **Body:**
+    - `username`: 4-12 chars.
+    - `password`: 8-35 chars, no spaces.
+    - `confirmPassword`: Must match.
 
-**Request Body Parameters:**
-
-| Parameter | Type | Required | constraints |
-| :--- | :--- | :--- | :--- |
-| `username` | String | Yes | 4 to 12 characters |
-| `password` | String | Yes | 8 to 35 characters, no spaces |
-| `confirmPassword` | String | Yes | Must match `password` |
-
-**Responses:**
-
-- **Success (302):** Redirects to `/` (Home).
-- **Client Error (400):** 
-    - "All fields are required"
-    - "Username must be at least 4 characters long"
-    - "Username maximum number of characters is 12"
-    - "Password must be at least 8 characters long"
-    - "Password maximum number of characters is 35"
-    - "Passwords do not match"
-    - "Password must not contain spaces"
-    - "Username already exists"
-- **Server Error (500):** "Error creating user"
-
----
-
-### 2. User Login
-Authenticates a user and establishes a session via cookies.
+#### 2. User Login
+Authenticates a user.
 
 - **URL:** `/users/login`
 - **Method:** `POST`
-- **Content-Type:** `application/x-www-form-urlencoded` or `application/json`
+- **Body:** `username`, `password`
+- **Response:** Sets `userCookie` (HttpOnly) and `userInfo`. Redirects based on role (`/admin` or `/`).
 
-**Request Body Parameters:**
-
-| Parameter | Type | Required | constraints |
-| :--- | :--- | :--- | :--- |
-| `username` | String | Yes | Max 12 characters |
-| `password` | String | Yes | Max 35 characters, no spaces |
-
-**Responses:**
-
-- **Success (302):** 
-    - Redirects to `/admin` if the user has `admin` role.
-    - Redirects to `/` for standard users.
-- **Client Error (400):** Validation errors (missing fields, length limits).
-- **Unauthorized (401):** "Invalid credentials" (User not found or password mismatch).
-- **Server Error (500):** "Error logging in"
-
----
-
-### 3. User Logout
-Invalidates the user session by clearing authentication cookies.
+#### 3. User Logout
+Invalidates the session.
 
 - **URL:** `/users/logout`
 - **Method:** `GET`
+- **Response:** Clears cookies and redirects to `/`.
 
-**Responses:**
+### Games (`/games`)
 
-- **Success (302):**  Clears `userCookie` and `userInfo` cookies and redirects to `/`.
-
----
-
-## Games
-
-### 1. List All Games
-Retrieves the full catalog of games.
+#### 1. List All Games
+Retrieves the full catalog.
 
 - **URL:** `/games`
 - **Method:** `GET`
 - **Access:** Public
+- **Response:** JSON array of game objects.
 
-**Responses:**
-
-- **Success (200):** Returns an array of game objects (JSON).
-
----
-
-### 2. Create Game
-Adds a new game to the catalog.
+#### 2. Create Game
+Adds a new game.
 
 - **URL:** `/games`
 - **Method:** `POST`
-- **Access:** Protected (Requires valid Auth Token)
+- **Access:** Protected (Admin Only)
+- **Sanitization:** `size` converts to uppercase.
+- **Body:** `name` (unique), `genre`, `size`, `cover` (URL).
 
-**Request Body Parameters:**
-
-| Parameter | Type | Required | constraints |
-| :--- | :--- | :--- | :--- |
-| `name` | String | Yes | Max 20 characters, unique |
-| `genre` | String | Yes | Max 20 characters |
-| `size` | String | Yes | Max 7 characters |
-| `cover` | String | Yes | Max 200 characters (URL) |
-
-**Responses:**
-
-- **Success (200):** `{ "message": "Game created succesfully" }`
-- **Client Error (400):** Validation errors (missing fields, length limits).
-- **Conflict (409):** "There is already a game with that name"
-- **Server Error (500):** "Error trying to add game"
-
----
-
-### 3. Update Game
-Updates an existing game's details.
+#### 3. Update Game
+Updates an existing game.
 
 - **URL:** `/games/:id`
 - **Method:** `PATCH`
-- **Access:** Protected (Requires valid Auth Token)
+- **Access:** Protected (Admin Only)
+- **Body:** `name`, `genre`, `size`, `cover`.
 
-**URL Parameters:**
-
-| Parameter | Type | Description |
-| :--- | :--- | :--- |
-| `id` | String | The unique MongoDB Object ID of the game |
-
-**Request Body Parameters:**
-
-| Parameter | Type | Required | constraints |
-| :--- | :--- | :--- | :--- |
-| `name` | String | Yes | Max 20 characters |
-| `genre` | String | Yes | Max 20 characters |
-| `size` | String | Yes | Max 7 characters |
-| `cover` | String | Yes | Max 200 characters (URL) |
-
-**Responses:**
-
-- **Success (200):** `{ "message": "Game updated successfully!" }`
-- **Client Error (400):** Validation errors (missing fields, length limits).
-- **Not Found (404):** "Game not found"
-- **Server Error (500):** "Error trying to edit game"
-
----
-
-### 4. Delete Game
-Removes a game from the catalog.
+#### 4. Delete Game
+Removes a game.
 
 - **URL:** `/games/:id`
 - **Method:** `DELETE`
-- **Access:** Protected (Requires valid Auth Token)
-
-**URL Parameters:**
-
-| Parameter | Type | Description |
-| :--- | :--- | :--- |
-| `id` | String | The unique MongoDB Object ID of the game |
-
-**Responses:**
-
-- **Success (200):** `{ "message": "Game was succesfully deleted" }`
-- **Client Error (400):** "Invalid ID"
-- **Not Found (404):** "No game was found"
-- **Server Error (500):** "Error trying to delete game"
+- **Access:** Protected (Admin Only)
